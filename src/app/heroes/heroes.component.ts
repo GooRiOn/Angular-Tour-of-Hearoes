@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HEROES } from './../mock-heroes';
 import { Hero } from '../hero';
 import { HeroService } from './../hero.service';
 
@@ -16,6 +15,17 @@ export class HeroesComponent implements OnInit {
 
   ngOnInit() {
     this.getHeroes();
+  }
+
+  addHero(name: string) {
+    this.heroService.addHero({ name } as Hero).subscribe(hero => {
+      this.heroes.push(hero);
+    })
+  }
+
+  deleteHero(hero: Hero): void {
+    this.heroes = this.heroes.filter(h => h !== hero);
+    this.heroService.deleteHero(hero).subscribe();
   }
 
   private getHeroes() {
